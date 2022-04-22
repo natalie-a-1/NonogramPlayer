@@ -1,10 +1,12 @@
 import java.util.List;
 
+import com.apple.eawt.Application;
+
 import edu.ou.cs2334.project5.presenters.NonogramMakerPresenter;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main {
+public class Main extends Application {
 	
 	private static final int IDX_CELL_SIZE = 0;
 	private static final int DEFAULT_CELL_SIZE = 30;
