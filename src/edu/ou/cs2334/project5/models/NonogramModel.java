@@ -17,7 +17,7 @@ public class NonogramModel {
 	private int[][] rowClues;
 	private int[][] colClues;
 	private CellState[][] cellStates;
-	
+
 	public NonogramModel(int[][] rowClues, int[][] colClues) {
 		// TODO: Implement deepCopy. 
 		// This is simple, and you should not ask about this on Discord.
@@ -26,7 +26,7 @@ public class NonogramModel {
 
 		cellStates = initCellStates(getNumRows(), getNumCols());
 	}
-	
+
 	public NonogramModel(File file) throws IOException {
 		// Number of rows and columns
 		BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -37,13 +37,13 @@ public class NonogramModel {
 
 		// TODO: Initialize cellStates.
 		// This is simple, and you should not ask about this on Discord.
-		
+
 		// TODO: Read in row clues.
 		// This is simple, and you should not ask about this on Discord.
-		
+
 		// TODO: Read in column clues.
 		// This is simple, and you should not ask about this on Discord.
-		
+
 		// Close reader
 		reader.close();
 	}
@@ -53,27 +53,27 @@ public class NonogramModel {
 		// This is simple, and you should not ask about this on Discord.
 		new NonogramModel(new File(filename));
 	}
-	
+
 	// TODO: Add more TODOs
-	
+
 	/* Helper methods */
-	
+
 	// This is implemented for you
 	private static CellState[][] initCellStates(int numRows, int numCols) {
 		// Create a 2D array to store numRows * numCols elements
 		CellState[][] cellStates = new CellState[numRows][numCols];
-		
+
 		// Set each element of the array to empty
 		for (int rowIdx = 0; rowIdx < numRows; ++rowIdx) {
 			for (int colIdx = 0; colIdx < numCols; ++colIdx) {
 				cellStates[rowIdx][colIdx] = CellState.EMPTY;
 			}
 		}
-		
+
 		// Return the result
 		return cellStates;
 	}
-	
+
 	// TODO: Implement this method
 	private static int[][] deepCopy(int[][] array) {
 		// You can do this in under 10 lines of code. If you ask the internet
@@ -85,32 +85,115 @@ public class NonogramModel {
 		// Do not ask about this on Discord. You can do this on your own. :)
 		return null;
 	}
-	
+
 	// This method is implemented for you. You need to figure out how it is useful.
 	private static int[][] readClueLines(BufferedReader reader, int numLines) throws IOException {
 		// Create a new 2D array to store the clues
 		int[][] clueLines = new int[numLines][];
-		
+
 		// Read in clues line-by-line and add them to the array
 		for (int lineNum = 0; lineNum < numLines; ++lineNum) {
 			// Read in a line
 			String line = reader.readLine();
-			
+
 			// Split the line according to the delimiter character
 			String[] tokens = line.split(DELIMITER);
-			
+
 			// Create new int array to store the clues in
 			int[] clues = new int[tokens.length];
 			for (int idx = 0; idx < tokens.length; ++idx) {
 				clues[idx] = Integer.parseInt(tokens[idx]);
 			}
-			
+
 			// Store the processed clues in the resulting 2D array
 			clueLines[lineNum] = clues;
 		}
-		
+
 		// Return the result
 		return clueLines;
 	}
-	
+
+	int getNumRows() {
+
+	}
+
+	int getNumCols() {
+
+	}
+
+	int getCellState(int rowIdx, int colIdx) {
+
+	}
+
+	boolean getCellStateBoolean(int rowIdx, int colIdx) {
+
+	}
+
+	boolean setCellState(int rowIdx, int colIdx, CellState state) {
+
+	}
+
+	int[][] getRowClues() {
+
+	}
+
+	int[][] getColClues() {
+
+	}
+
+	int[] getRowClue(int rowIdx) {
+
+	}
+
+	int[] getColClue(int colIdx) {
+
+	}
+
+	boolean isRowSolved(int rowIdx) {
+
+	}
+
+	boolean isColSolved(int colIdx) {
+
+	}
+
+	boolean isSolved() {
+
+	}
+
+	void resetCells() {
+
+	}
+
+	static List<Integer> project() {
+		List<Integer> temp = new ArrayList<Integer>();
+		int count = 0;
+		for (int i = 0; i < cells.length; i++) {
+			if (cells[i] == true) {
+				count++;
+			} else if (cells[i] == false) {
+				if (count != 0) {
+					temp.add(count);
+				}
+				count = 0;
+			}
+		}
+		if (count > 0) {
+			temp.add(count);
+		}
+
+		if (temp.size() == 0) {
+			temp.add(0);
+		}
+		return temp;
+	}
+
+	static int[] projectCellStatesRow(int rowIdx) {
+
+	}
+
+	static int[] projectCellStatesCol(int colIdx) {
+
+	}
+
 }
