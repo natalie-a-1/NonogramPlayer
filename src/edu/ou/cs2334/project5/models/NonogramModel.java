@@ -37,12 +37,20 @@ public class NonogramModel {
 
 		// TODO: Initialize cellStates.
 		// This is simple, and you should not ask about this on Discord.
+//		cellStates = new CellState[numRows][numCols];
+		this.rowClues = deepCopy(rowClues);
+		this.colClues = deepCopy(colClues);
+		cellStates = initCellStates(getNumRows(), getNumCols());
 
 		// TODO: Read in row clues.
 		// This is simple, and you should not ask about this on Discord.
+		
+		readClueLines(reader, numRows);
 
 		// TODO: Read in column clues.
 		// This is simple, and you should not ask about this on Discord.
+		
+		readClueLines(reader, numCols);
 
 		// Close reader
 		reader.close();
@@ -74,8 +82,12 @@ public class NonogramModel {
 		return cellStates;
 	}
 
-	// TODO: Implement this method
+	// Rorick: stackoverflow
 	private static int[][] deepCopy(int[][] array) {
+		int[][] temp = new int[array.length][];
+		for (int i = 0; i < array.length; i++) {
+			temp[i] = Arrays.copyOf(temp[i], temp[i].length);
+		}
 		// You can do this in under 10 lines of code. If you ask the internet
 		// "how do I do a deep copy of a 2d array in Java," be sure to cite
 		// your source.
@@ -83,7 +95,7 @@ public class NonogramModel {
 		// we could simply use Arrays.copyOf directly without this helper
 		// method.
 		// Do not ask about this on Discord. You can do this on your own. :)
-		return null;
+		return temp;
 	}
 
 	// This method is implemented for you. You need to figure out how it is useful.
@@ -113,40 +125,41 @@ public class NonogramModel {
 		return clueLines;
 	}
 
-	int getNumRows() {
+	public int getNumRows() {
+		return cellStates[rowIdx][];
 
 	}
 
-	int getNumCols() {
-
+	public int getNumCols() {
+		return colClues.length;
 	}
 
-	int getCellState(int rowIdx, int colIdx) {
-
+	public CellState getCellState(int rowIdx, int colIdx) {
+		return cellStates[rowIdx][colIdx];
 	}
 
-	boolean getCellStateBoolean(int rowIdx, int colIdx) {
-
+	public boolean getCellStateBoolean(int rowIdx, int colIdx) {
+		return CellState.toBoolean(cellStates[rowIdx][colIdx]);
 	}
 
 	boolean setCellState(int rowIdx, int colIdx, CellState state) {
 
 	}
 
-	int[][] getRowClues() {
-
+	public int[][] getRowClues() {
+		return deepCopy(rowClues);
 	}
 
-	int[][] getColClues() {
-
+	public int[][] getColClues() {
+		return deepCopy(colClues);
 	}
 
-	int[] getRowClue(int rowIdx) {
-
+	public int[] getRowClue(int rowIdx) {
+		return rowClues[rowIdx];
 	}
 
-	int[] getColClue(int colIdx) {
-
+	public int[] getColClue(int colIdx) {
+		return colClues[colIdx];
 	}
 
 	boolean isRowSolved(int rowIdx) {
