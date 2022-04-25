@@ -1,8 +1,6 @@
 import java.util.List;
-
-import com.apple.eawt.Application;
-
-import edu.ou.cs2334.project5.presenters.NonogramMakerPresenter;
+import edu.ou.cs2334.project5.Presenters.NonogramPresenter;
+import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -29,10 +27,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		List<String> parameters = getParameters().getUnnamed();
-		NonogramMakerPresenter nonogramMakerPresenter = new NonogramMakerPresenter(
-				Integer.parseInt(parameters.get(IDX_NUM_ROWS)), Integer.parseInt(parameters.get(IDX_NUM_COLS)),
-				Integer.parseInt(parameters.get(IDX_CELL_SIZE)));
-		Scene scene = new Scene(nonogramMakerPresenter.getPane());
+		NonogramPresenter nonogramPresenter = new NonogramPresenter(IDX_CELL_SIZE);
+		Scene scene = new Scene(nonogramPresenter.getPane());
 		primaryStage.setScene(scene);
 		scene.getStylesheets().add("style.css");
 		primaryStage.setTitle("My first java app!"); // CHANGE NAME
