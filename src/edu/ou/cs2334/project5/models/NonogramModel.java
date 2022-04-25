@@ -7,7 +7,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+/**
+ * This class holds the rules of the entire game by storing rules and cell states. 
+ * 
+ * @author Natalie Hill
+ *
+ */
 public class NonogramModel {
 
 	private static final String DELIMITER = " ";
@@ -16,17 +21,29 @@ public class NonogramModel {
 
 	private int[][] rowClues;
 	private int[][] colClues;
-	private CellState[][] cellStates;
+	private static CellState[][] cellStates;
 
+	/**
+	 * This is the constructor for the NonogramModel that takes in two 2D arrays.
+	 * 
+	 * @param rowClues	2D array of row clues
+	 * @param colClues	2D array of column clues
+	 */
 	public NonogramModel(int[][] rowClues, int[][] colClues) {
-		// TODO: Implement deepCopy. 
-		// This is simple, and you should not ask about this on Discord.
 		this.rowClues = deepCopy(rowClues);
+//		deepCopy(rowClues);
 		this.colClues = deepCopy(colClues);
+//		deepCopy(colClues);
 
 		cellStates = initCellStates(getNumRows(), getNumCols());
 	}
 
+	/**
+	 * This is a constructor for the NonogramModel that reads in information from a file.
+	 * 
+	 * @param file	the file to be read in
+	 * @throws IOException	thrown if the file is unable to be opened
+	 */
 	public NonogramModel(File file) throws IOException {
 		// Number of rows and columns
 		BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -34,37 +51,29 @@ public class NonogramModel {
 		String[] fields = header.split(DELIMITER);
 		int numRows = Integer.parseInt(fields[IDX_NUM_ROWS]);
 		int numCols = Integer.parseInt(fields[IDX_NUM_COLS]);
-
-		// TODO: Initialize cellStates.
-		// This is simple, and you should not ask about this on Discord.
-//		cellStates = new CellState[numRows][numCols];
-		this.rowClues = deepCopy(rowClues);
-		this.colClues = deepCopy(colClues);
+		
+		int[][] rows = readClueLines(reader, numRows);
+		this.rowClues = deepCopy(rows);
+		
+		int[][] cols = readClueLines(reader, numCols);
+		this.colClues = deepCopy(cols);
+		
 		cellStates = initCellStates(getNumRows(), getNumCols());
-
-		// TODO: Read in row clues.
-		// This is simple, and you should not ask about this on Discord.
-		
-		readClueLines(reader, numRows);
-
-		// TODO: Read in column clues.
-		// This is simple, and you should not ask about this on Discord.
-		
-		readClueLines(reader, numCols);
 
 		// Close reader
 		reader.close();
 	}
 
+	/**
+	 * This a constructor for the NonogramModel that changes a String 
+	 * into a file in order to read in information from the String.
+	 * 
+	 * @param filename	the name of the file to be converted
+	 * @throws IOException	thrown if the file is unable to be opened
+	 */
 	public NonogramModel(String filename) throws IOException {
-		// TODO: Fix this constructor
-		// This is simple, and you should not ask about this on Discord.
-		new NonogramModel(new File(filename));
+		this(new File(filename));
 	}
-
-	// TODO: Add more TODOs
-
-	/* Helper methods */
 
 	// This is implemented for you
 	private static CellState[][] initCellStates(int numRows, int numCols) {
@@ -86,15 +95,8 @@ public class NonogramModel {
 	private static int[][] deepCopy(int[][] array) {
 		int[][] temp = new int[array.length][];
 		for (int i = 0; i < array.length; i++) {
-			temp[i] = Arrays.copyOf(temp[i], temp[i].length);
+			temp[i] = Arrays.copyOf(array[i], array[i].length);
 		}
-		// You can do this in under 10 lines of code. If you ask the internet
-		// "how do I do a deep copy of a 2d array in Java," be sure to cite
-		// your source.
-		// Note that if we used a 1-dimensional array to store our arrays,
-		// we could simply use Arrays.copyOf directly without this helper
-		// method.
-		// Do not ask about this on Discord. You can do this on your own. :)
 		return temp;
 	}
 
@@ -125,66 +127,178 @@ public class NonogramModel {
 		return clueLines;
 	}
 
+	/**
+	 * This retrieves the number of rows in the Nonogram.
+	 * 
+	 * @return	 the length of rowClues
+	 */
 	public int getNumRows() {
-		return cellStates[rowIdx][];
+		return rowClues.length;
 
 	}
 
+	/**
+	 * This retrieves the number of columns in the Nonogram. 
+	 * 
+	 * @return	the length of colClues
+	 */
 	public int getNumCols() {
 		return colClues.length;
 	}
 
+	/**
+	 * This retrieves the state of a given cell.
+	 * 
+	 * @param rowIdx	the index of the row in the Nonogram
+	 * @param colIdx	the index of the column in the Nonogrma
+	 * @return	the state of a cell at the row/column index
+	 */
 	public CellState getCellState(int rowIdx, int colIdx) {
 		return cellStates[rowIdx][colIdx];
 	}
 
+	/**
+	 * This changes the state of a given cell into a boolean value.
+	 * 
+	 * @param rowIdx	the index of the row in the Nonogram
+	 * @param colIdx	the index of the column in the Nonogrma
+	 * @return	the state of a cell at the row/column index as a boolean value
+	 */
 	public boolean getCellStateBoolean(int rowIdx, int colIdx) {
 		return CellState.toBoolean(cellStates[rowIdx][colIdx]);
 	}
 
-	boolean setCellState(int rowIdx, int colIdx, CellState state) {
-
+	/**
+	 * This changes the state of a cell at a given index in the Nonogram. 
+	 * 
+	 * @param rowIdx	the index of the row in the Nonogram
+	 * @param colIdx	the index of the column in the Nonogrma
+	 * @param state		the state the index should be changed to 
+	 * @return	true if the index was changed or false if it was not
+	 */
+	public boolean setCellState(int rowIdx, int colIdx, CellState state) {
+		if(cellStates[rowIdx][colIdx] == null || isSolved()) {
+			return false;
+		} else {
+			CellState.toBoolean(cellStates[rowIdx][colIdx]);
+			return true;
+		}
+		
 	}
 
+	/**
+	 * This retrieves a copy of rowClues. 
+	 * 
+	 * @return	a copy of rowClues
+	 */
 	public int[][] getRowClues() {
 		return deepCopy(rowClues);
 	}
 
+	/**
+	 * This returns a copy of the colClues.
+	 * 
+	 * @return	a copy of colClues
+	 */
 	public int[][] getColClues() {
 		return deepCopy(colClues);
 	}
 
+	/**
+	 * This retrieves the clues from a given row.
+	 * 
+	 * @param rowIdx	the index of the row to be return
+	 * @return	an array of rowClues
+	 */
 	public int[] getRowClue(int rowIdx) {
-		return rowClues[rowIdx];
+		int[][] temp = deepCopy(rowClues);
+		return temp[rowIdx];
 	}
+	
 
+	/**
+	 * This retrieves the clues from a given column.
+	 * 
+	 * @param colIdx	the index of the column to be searched
+	 * @return	an array of colClues
+	 */
 	public int[] getColClue(int colIdx) {
-		return colClues[colIdx];
+		int[][] temp = deepCopy(colClues);
+		return temp[colIdx];
 	}
 
-	boolean isRowSolved(int rowIdx) {
+	/**
+	 * This tells the user if the row is solved.
+	 * 
+	 * @param rowIdx	the index of the row to be searched
+	 * @return	true if the row is solved and false if the row is not solved
+	 */
+	public boolean isRowSolved(int rowIdx) {
+		return (rowClues[rowIdx] == projectCellStatesRow(rowIdx));
+	}
+
+	/**
+	 * This tells the user if the column is solved.
+	 * 
+	 * @param colIdx	the index of the column to be searched
+	 * @return	true if the column is solved and false if the column is not solved
+	 */
+	public boolean isColSolved(int colIdx) {
+		return (colClues[colIdx] == projectCellStatesCol(colIdx));
 
 	}
 
-	boolean isColSolved(int colIdx) {
-
+	/**
+	 * This method tells the user if the entire puzzle is solved.
+	 * 
+	 * @return	true if the puzzle is solved and false if the puzzle is not solved
+	 */
+	public boolean isSolved() {
+		for (int row = 0; row < getNumRows(); row++) {
+			int[] projectRow = projectCellStatesRow(row);
+			for (int i = 0; i < projectRow.length; i++) {
+				if (projectRow[i] == 0) {
+					return false;
+				}
+			}
+		}
+		
+		for (int col = 0; col < getNumCols(); col++) {
+			int[] projectCol = projectCellStatesCol(col);
+			for (int i = 0; i < projectCol.length; i++) {
+				if (projectCol[i] == 0) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
-	boolean isSolved() {
-
+	/**
+	 * This method sets all cells to an empty state.
+	 * 
+	 */
+	public void resetCells() {
+		for (int row = 0; row < getNumRows(); row++) {
+			for (int col = 0; col < getNumCols(); col++) {
+				cellStates[row][col] = CellState.EMPTY;
+			}
+		}
 	}
 
-	void resetCells() {
-
-	}
-
-	static List<Integer> project() {
+	/**
+	 * This method projects a list of cellStates.
+	 * 
+	 * @return	a list of cellStates
+	 */
+	public List<Integer> project() {
 		List<Integer> temp = new ArrayList<Integer>();
 		int count = 0;
-		for (int i = 0; i < cells.length; i++) {
-			if (cells[i] == true) {
+		for (int row = 0; row < getNumRows(); row++) {
+			for(int col = 0; col < getNumCols(); col++)
+			if (cellStates[row][col] == CellState.FILLED) {
 				count++;
-			} else if (cells[i] == false) {
+			} else if (cellStates[row][col] == CellState.EMPTY) {
 				if (count != 0) {
 					temp.add(count);
 				}
@@ -201,12 +315,50 @@ public class NonogramModel {
 		return temp;
 	}
 
-	static int[] projectCellStatesRow(int rowIdx) {
-
+	/**
+	 * This shows the cellState values in a given row.
+	 * 
+	 * @param rowIdx	the index of the row to be projected
+	 * @return	array of int values
+	 */
+	public static int[] projectCellStatesRow(int rowIdx) {
+		int[] intValues = new int[cellStates[rowIdx].length];
+		boolean[] booValues = new boolean[cellStates[rowIdx].length];
+		for(int row = 0; row < cellStates[rowIdx].length; row++) {
+			booValues[row] = CellState.toBoolean(cellStates[row][0]);
+		}
+		
+		for (int row = 0; row < booValues.length; row++) {
+			if (booValues[row]) {
+				intValues[row] = 1;
+			} else {
+				intValues[row] = 0;
+			}
+		}
+		return intValues;
 	}
 
-	static int[] projectCellStatesCol(int colIdx) {
-
+	/**
+	 * This shows the cellState values in a given column.
+	 * 
+	 * @param colIdx	the index of the column to be projected
+	 * @return	array of int values
+	 */
+	public static int[] projectCellStatesCol(int colIdx) {
+		int[] intValues = new int[cellStates[colIdx].length];
+		boolean[] booValues = new boolean[cellStates[colIdx].length];
+		for(int col = 0; col < cellStates[colIdx].length; col++) {
+			booValues[col] = CellState.toBoolean(cellStates[0][col]);
+		}
+		
+		for (int col = 0; col < booValues.length; col++) {
+			if (booValues[col]) {
+				intValues[col] = 1;
+			} else {
+				intValues[col] = 0;
+			}
+		}
+		return intValues;
 	}
 
 }
