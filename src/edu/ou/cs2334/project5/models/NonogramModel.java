@@ -21,7 +21,7 @@ public class NonogramModel {
 
 	private int[][] rowClues;
 	private int[][] colClues;
-	private static CellState[][] cellStates;
+	private CellState[][] cellStates;
 
 	/**
 	 * This is the constructor for the NonogramModel that takes in two 2D arrays.
@@ -31,10 +31,9 @@ public class NonogramModel {
 	 */
 	public NonogramModel(int[][] rowClues, int[][] colClues) {
 		this.rowClues = deepCopy(rowClues);
-//		deepCopy(rowClues);
+		//		deepCopy(rowClues);
 		this.colClues = deepCopy(colClues);
-//		deepCopy(colClues);
-
+		//		deepCopy(colClues);
 		cellStates = initCellStates(getNumRows(), getNumCols());
 	}
 
@@ -51,13 +50,13 @@ public class NonogramModel {
 		String[] fields = header.split(DELIMITER);
 		int numRows = Integer.parseInt(fields[IDX_NUM_ROWS]);
 		int numCols = Integer.parseInt(fields[IDX_NUM_COLS]);
-		
+
 		int[][] rows = readClueLines(reader, numRows);
 		this.rowClues = deepCopy(rows);
-		
+
 		int[][] cols = readClueLines(reader, numCols);
 		this.colClues = deepCopy(cols);
-		
+
 		cellStates = initCellStates(getNumRows(), getNumCols());
 
 		// Close reader
@@ -92,7 +91,7 @@ public class NonogramModel {
 	}
 
 	// Rorick: stackoverflow
-	private static int[][] deepCopy(int[][] array) {
+	private int[][] deepCopy(int[][] array) {
 		int[][] temp = new int[array.length][];
 		for (int i = 0; i < array.length; i++) {
 			temp[i] = Arrays.copyOf(array[i], array[i].length);
@@ -165,11 +164,12 @@ public class NonogramModel {
 	 * @return	the state of a cell at the row/column index as a boolean value
 	 */
 	public boolean getCellStateBoolean(int rowIdx, int colIdx) {
-		return CellState.toBoolean(cellStates[rowIdx][colIdx]);
+		return CellState.toBoolean(getCellState(rowIdx, colIdx));
 	}
 
 	/**
 	 * This changes the state of a cell at a given index in the Nonogram. 
+	 * I received help from Keon Moradi on this method.
 	 * 
 	 * @param rowIdx	the index of the row in the Nonogram
 	 * @param colIdx	the index of the column in the Nonogrma
@@ -177,13 +177,13 @@ public class NonogramModel {
 	 * @return	true if the index was changed or false if it was not
 	 */
 	public boolean setCellState(int rowIdx, int colIdx, CellState state) {
-		if(cellStates[rowIdx][colIdx] == null || isSolved()) {
+		boolean output = false;
+		if(state == null || isSolved()) {
 			return false;
-		} else {
-			CellState.toBoolean(cellStates[rowIdx][colIdx]);
-			return true;
-		}
-		
+		} 
+		output = !(getCellState(rowIdx, colIdx).equals(state));
+		cellStates[rowIdx][colIdx] = state;
+		return output;
 	}
 
 	/**
@@ -214,7 +214,7 @@ public class NonogramModel {
 		int[][] temp = deepCopy(rowClues);
 		return temp[rowIdx];
 	}
-	
+
 
 	/**
 	 * This retrieves the clues from a given column.
@@ -234,7 +234,7 @@ public class NonogramModel {
 	 * @return	true if the row is solved and false if the row is not solved
 	 */
 	public boolean isRowSolved(int rowIdx) {
-		return (rowClues[rowIdx] == projectCellStatesRow(rowIdx));
+		return Arrays.equals(getRowClue(rowIdx), projectCellStatesRow(rowIdx));
 	}
 
 	/**
@@ -244,7 +244,7 @@ public class NonogramModel {
 	 * @return	true if the column is solved and false if the column is not solved
 	 */
 	public boolean isColSolved(int colIdx) {
-		return (colClues[colIdx] == projectCellStatesCol(colIdx));
+		return Arrays.equals(getColClue(colIdx), projectCellStatesCol(colIdx));
 
 	}
 
@@ -254,21 +254,14 @@ public class NonogramModel {
 	 * @return	true if the puzzle is solved and false if the puzzle is not solved
 	 */
 	public boolean isSolved() {
-		for (int row = 0; row < getNumRows(); row++) {
-			int[] projectRow = projectCellStatesRow(row);
-			for (int i = 0; i < projectRow.length; i++) {
-				if (projectRow[i] == 0) {
-					return false;
-				}
+		for(int i = 0; i < getNumRows(); i++) {
+			if (isRowSolved(i) == false) {
+				return false;
 			}
 		}
-		
-		for (int col = 0; col < getNumCols(); col++) {
-			int[] projectCol = projectCellStatesCol(col);
-			for (int i = 0; i < projectCol.length; i++) {
-				if (projectCol[i] == 0) {
-					return false;
-				}
+		for(int i = 0; i< getNumCols(); i++) {
+			if(isColSolved(i) == false) {
+				return false;
 			}
 		}
 		return true;
@@ -291,14 +284,13 @@ public class NonogramModel {
 	 * 
 	 * @return	a list of cellStates
 	 */
-	public List<Integer> project() {
+	public static List<Integer> project(boolean[] cells) {
 		List<Integer> temp = new ArrayList<Integer>();
 		int count = 0;
-		for (int row = 0; row < getNumRows(); row++) {
-			for(int col = 0; col < getNumCols(); col++)
-			if (cellStates[row][col] == CellState.FILLED) {
+		for (int i = 0; i < cells.length; i++) {
+			if (cells[i] == true) {
 				count++;
-			} else if (cellStates[row][col] == CellState.EMPTY) {
+			} else if (cells[i] == false) {
 				if (count != 0) {
 					temp.add(count);
 				}
@@ -321,44 +313,32 @@ public class NonogramModel {
 	 * @param rowIdx	the index of the row to be projected
 	 * @return	array of int values
 	 */
-	public static int[] projectCellStatesRow(int rowIdx) {
-		int[] intValues = new int[cellStates[rowIdx].length];
-		boolean[] booValues = new boolean[cellStates[rowIdx].length];
-		for(int row = 0; row < cellStates[rowIdx].length; row++) {
-			booValues[row] = CellState.toBoolean(cellStates[row][0]);
+	public int[] projectCellStatesRow(int rowIdx) {
+		boolean[] booValues = new boolean[getNumCols()];
+		for(int col = 0; col < getNumCols(); col++) {
+			booValues[col] = CellState.toBoolean(getCellState(rowIdx, col));
 		}
-		
-		for (int row = 0; row < booValues.length; row++) {
-			if (booValues[row]) {
-				intValues[row] = 1;
-			} else {
-				intValues[row] = 0;
-			}
-		}
-		return intValues;
-	}
+		int[] intValues = new int[booValues.length];
 
-	/**
-	 * This shows the cellState values in a given column.
-	 * 
-	 * @param colIdx	the index of the column to be projected
-	 * @return	array of int values
-	 */
-	public static int[] projectCellStatesCol(int colIdx) {
-		int[] intValues = new int[cellStates[colIdx].length];
-		boolean[] booValues = new boolean[cellStates[colIdx].length];
-		for(int col = 0; col < cellStates[colIdx].length; col++) {
-			booValues[col] = CellState.toBoolean(cellStates[0][col]);
-		}
-		
-		for (int col = 0; col < booValues.length; col++) {
-			if (booValues[col]) {
-				intValues[col] = 1;
-			} else {
-				intValues[col] = 0;
-			}
-		}
-		return intValues;
-	}
+		List<Integer> temp = project(booValues);
 
-}
+		return temp.stream().mapToInt(Integer::intValue).toArray();
+	}
+		/**
+		 * This shows the cellState values in a given column.
+		 * 
+		 * @param colIdx	the index of the column to be projected
+		 * @return	array of int values
+		 */
+		public int[] projectCellStatesCol(int colIdx) {
+			boolean[] booValues = new boolean[getNumRows()];
+			for(int row = 0; row < booValues.length; row++) {
+				booValues[row] = CellState.toBoolean(getCellState(row, colIdx));
+			}
+
+			List<Integer> temp = project(booValues);
+
+			return temp.stream().mapToInt(Integer::intValue).toArray();
+		}
+
+	}
