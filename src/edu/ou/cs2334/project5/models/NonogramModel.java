@@ -7,8 +7,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 /**
- * This class holds the rules of the entire game by storing rules and cell states. 
+ * This class holds the rules of the entire game by storing rules and cell
+ * states.
  * 
  * @author Natalie Hill
  *
@@ -26,22 +28,23 @@ public class NonogramModel {
 	/**
 	 * This is the constructor for the NonogramModel that takes in two 2D arrays.
 	 * 
-	 * @param rowClues	2D array of row clues
-	 * @param colClues	2D array of column clues
+	 * @param rowClues 2D array of row clues
+	 * @param colClues 2D array of column clues
 	 */
 	public NonogramModel(int[][] rowClues, int[][] colClues) {
 		this.rowClues = deepCopy(rowClues);
-		//		deepCopy(rowClues);
+		// deepCopy(rowClues);
 		this.colClues = deepCopy(colClues);
-		//		deepCopy(colClues);
+		// deepCopy(colClues);
 		cellStates = initCellStates(getNumRows(), getNumCols());
 	}
 
 	/**
-	 * This is a constructor for the NonogramModel that reads in information from a file.
+	 * This is a constructor for the NonogramModel that reads in information from a
+	 * file.
 	 * 
-	 * @param file	the file to be read in
-	 * @throws IOException	thrown if the file is unable to be opened
+	 * @param file the file to be read in
+	 * @throws IOException thrown if the file is unable to be opened
 	 */
 	public NonogramModel(File file) throws IOException {
 		// Number of rows and columns
@@ -64,11 +67,11 @@ public class NonogramModel {
 	}
 
 	/**
-	 * This a constructor for the NonogramModel that changes a String 
-	 * into a file in order to read in information from the String.
+	 * This a constructor for the NonogramModel that changes a String into a file in
+	 * order to read in information from the String.
 	 * 
-	 * @param filename	the name of the file to be converted
-	 * @throws IOException	thrown if the file is unable to be opened
+	 * @param filename the name of the file to be converted
+	 * @throws IOException thrown if the file is unable to be opened
 	 */
 	public NonogramModel(String filename) throws IOException {
 		this(new File(filename));
@@ -129,7 +132,7 @@ public class NonogramModel {
 	/**
 	 * This retrieves the number of rows in the Nonogram.
 	 * 
-	 * @return	 the length of rowClues
+	 * @return the length of rowClues
 	 */
 	public int getNumRows() {
 		return rowClues.length;
@@ -137,9 +140,9 @@ public class NonogramModel {
 	}
 
 	/**
-	 * This retrieves the number of columns in the Nonogram. 
+	 * This retrieves the number of columns in the Nonogram.
 	 * 
-	 * @return	the length of colClues
+	 * @return the length of colClues
 	 */
 	public int getNumCols() {
 		return colClues.length;
@@ -148,9 +151,9 @@ public class NonogramModel {
 	/**
 	 * This retrieves the state of a given cell.
 	 * 
-	 * @param rowIdx	the index of the row in the Nonogram
-	 * @param colIdx	the index of the column in the Nonogrma
-	 * @return	the state of a cell at the row/column index
+	 * @param rowIdx the index of the row in the Nonogram
+	 * @param colIdx the index of the column in the Nonogrma
+	 * @return the state of a cell at the row/column index
 	 */
 	public CellState getCellState(int rowIdx, int colIdx) {
 		return cellStates[rowIdx][colIdx];
@@ -159,37 +162,37 @@ public class NonogramModel {
 	/**
 	 * This changes the state of a given cell into a boolean value.
 	 * 
-	 * @param rowIdx	the index of the row in the Nonogram
-	 * @param colIdx	the index of the column in the Nonogrma
-	 * @return	the state of a cell at the row/column index as a boolean value
+	 * @param rowIdx the index of the row in the Nonogram
+	 * @param colIdx the index of the column in the Nonogrma
+	 * @return the state of a cell at the row/column index as a boolean value
 	 */
 	public boolean getCellStateBoolean(int rowIdx, int colIdx) {
 		return CellState.toBoolean(getCellState(rowIdx, colIdx));
 	}
 
 	/**
-	 * This changes the state of a cell at a given index in the Nonogram. 
-	 * I received help from Keon Moradi on this method.
+	 * This changes the state of a cell at a given index in the Nonogram. I received
+	 * help from Keon Moradi on this method.
 	 * 
-	 * @param rowIdx	the index of the row in the Nonogram
-	 * @param colIdx	the index of the column in the Nonogrma
-	 * @param state		the state the index should be changed to 
-	 * @return	true if the index was changed or false if it was not
+	 * @param rowIdx the index of the row in the Nonogram
+	 * @param colIdx the index of the column in the Nonogrma
+	 * @param state  the state the index should be changed to
+	 * @return true if the index was changed or false if it was not
 	 */
 	public boolean setCellState(int rowIdx, int colIdx, CellState state) {
 		boolean output = false;
-		if(state == null || isSolved()) {
+		if (state == null || isSolved()) {
 			return false;
-		} 
+		}
 		output = !(getCellState(rowIdx, colIdx).equals(state));
 		cellStates[rowIdx][colIdx] = state;
 		return output;
 	}
 
 	/**
-	 * This retrieves a copy of rowClues. 
+	 * This retrieves a copy of rowClues.
 	 * 
-	 * @return	a copy of rowClues
+	 * @return a copy of rowClues
 	 */
 	public int[][] getRowClues() {
 		return deepCopy(rowClues);
@@ -198,7 +201,7 @@ public class NonogramModel {
 	/**
 	 * This returns a copy of the colClues.
 	 * 
-	 * @return	a copy of colClues
+	 * @return a copy of colClues
 	 */
 	public int[][] getColClues() {
 		return deepCopy(colClues);
@@ -207,20 +210,19 @@ public class NonogramModel {
 	/**
 	 * This retrieves the clues from a given row.
 	 * 
-	 * @param rowIdx	the index of the row to be return
-	 * @return	an array of rowClues
+	 * @param rowIdx the index of the row to be return
+	 * @return an array of rowClues
 	 */
 	public int[] getRowClue(int rowIdx) {
 		int[][] temp = deepCopy(rowClues);
 		return temp[rowIdx];
 	}
 
-
 	/**
 	 * This retrieves the clues from a given column.
 	 * 
-	 * @param colIdx	the index of the column to be searched
-	 * @return	an array of colClues
+	 * @param colIdx the index of the column to be searched
+	 * @return an array of colClues
 	 */
 	public int[] getColClue(int colIdx) {
 		int[][] temp = deepCopy(colClues);
@@ -230,8 +232,8 @@ public class NonogramModel {
 	/**
 	 * This tells the user if the row is solved.
 	 * 
-	 * @param rowIdx	the index of the row to be searched
-	 * @return	true if the row is solved and false if the row is not solved
+	 * @param rowIdx the index of the row to be searched
+	 * @return true if the row is solved and false if the row is not solved
 	 */
 	public boolean isRowSolved(int rowIdx) {
 		return Arrays.equals(getRowClue(rowIdx), projectCellStatesRow(rowIdx));
@@ -240,8 +242,8 @@ public class NonogramModel {
 	/**
 	 * This tells the user if the column is solved.
 	 * 
-	 * @param colIdx	the index of the column to be searched
-	 * @return	true if the column is solved and false if the column is not solved
+	 * @param colIdx the index of the column to be searched
+	 * @return true if the column is solved and false if the column is not solved
 	 */
 	public boolean isColSolved(int colIdx) {
 		return Arrays.equals(getColClue(colIdx), projectCellStatesCol(colIdx));
@@ -251,16 +253,16 @@ public class NonogramModel {
 	/**
 	 * This method tells the user if the entire puzzle is solved.
 	 * 
-	 * @return	true if the puzzle is solved and false if the puzzle is not solved
+	 * @return true if the puzzle is solved and false if the puzzle is not solved
 	 */
 	public boolean isSolved() {
-		for(int i = 0; i < getNumRows(); i++) {
+		for (int i = 0; i < getNumRows(); i++) {
 			if (isRowSolved(i) == false) {
 				return false;
 			}
 		}
-		for(int i = 0; i< getNumCols(); i++) {
-			if(isColSolved(i) == false) {
+		for (int i = 0; i < getNumCols(); i++) {
+			if (isColSolved(i) == false) {
 				return false;
 			}
 		}
@@ -282,7 +284,7 @@ public class NonogramModel {
 	/**
 	 * This method projects a list of cellStates.
 	 * 
-	 * @return	a list of cellStates
+	 * @return a list of cellStates
 	 */
 	public static List<Integer> project(boolean[] cells) {
 		List<Integer> temp = new ArrayList<Integer>();
@@ -310,12 +312,12 @@ public class NonogramModel {
 	/**
 	 * This shows the cellState values in a given row.
 	 * 
-	 * @param rowIdx	the index of the row to be projected
-	 * @return	array of int values
+	 * @param rowIdx the index of the row to be projected
+	 * @return array of int values
 	 */
 	public int[] projectCellStatesRow(int rowIdx) {
 		boolean[] booValues = new boolean[getNumCols()];
-		for(int col = 0; col < getNumCols(); col++) {
+		for (int col = 0; col < getNumCols(); col++) {
 			booValues[col] = CellState.toBoolean(getCellState(rowIdx, col));
 		}
 		int[] intValues = new int[booValues.length];
@@ -324,21 +326,22 @@ public class NonogramModel {
 
 		return temp.stream().mapToInt(Integer::intValue).toArray();
 	}
-		/**
-		 * This shows the cellState values in a given column.
-		 * 
-		 * @param colIdx	the index of the column to be projected
-		 * @return	array of int values
-		 */
-		public int[] projectCellStatesCol(int colIdx) {
-			boolean[] booValues = new boolean[getNumRows()];
-			for(int row = 0; row < booValues.length; row++) {
-				booValues[row] = CellState.toBoolean(getCellState(row, colIdx));
-			}
 
-			List<Integer> temp = project(booValues);
-
-			return temp.stream().mapToInt(Integer::intValue).toArray();
+	/**
+	 * This shows the cellState values in a given column.
+	 * 
+	 * @param colIdx the index of the column to be projected
+	 * @return array of int values
+	 */
+	public int[] projectCellStatesCol(int colIdx) {
+		boolean[] booValues = new boolean[getNumRows()];
+		for (int row = 0; row < booValues.length; row++) {
+			booValues[row] = CellState.toBoolean(getCellState(row, colIdx));
 		}
 
+		List<Integer> temp = project(booValues);
+
+		return temp.stream().mapToInt(Integer::intValue).toArray();
 	}
+
+}
