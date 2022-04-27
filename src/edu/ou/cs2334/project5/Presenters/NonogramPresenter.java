@@ -2,7 +2,6 @@ package edu.ou.cs2334.project5.Presenters;
 
 import java.io.File;
 import java.io.IOException;
-
 import edu.ou.cs2334.project5.interfaces.Openable;
 import edu.ou.cs2334.project5.models.CellState;
 import edu.ou.cs2334.project5.models.NonogramModel;
@@ -27,6 +26,8 @@ public class NonogramPresenter implements Openable {
 	private NonogramModel model;
 	private int cellLength;
 	private static String DEFAULT_PUZZLE = "puzzles/space-invader.txt";
+	public int row;
+	public int col;
 	
 	/**
 	 * This is the constructor for a NonogramPresenter.
@@ -44,7 +45,7 @@ public class NonogramPresenter implements Openable {
 	
 	private void initializePresenter() {
 		initializeView();
-		bindCellViews();
+		bindCellView();
 		synchronize();
 		configureButtons();
 	}
@@ -60,14 +61,25 @@ public class NonogramPresenter implements Openable {
 	}
 	
 	/**
-	 * This method binds each cell in CellView to a button that handles mouse cloick events.
+	 * This method binds each cell in CellView to a button that handles mouse click events.
 	 */
 	public void bindCellView() {
-		for (int row = 0; row < model.getNumRows(); row++) {
-			for (int col = 0; col < model.getNumCols(); col++) {
-				view.getCellView(row, col).setOnMouseClicked(new EventHandler<MouseEvent>());
-					//TODO HELP???
-				
+//		int row;
+//		int col;
+		for (row = 0; row < model.getNumRows(); row++) {
+			for (col = 0; col < model.getNumCols(); col++) {
+				view.getCellView(row, col).setOnMouseClicked(new EventHandler<MouseEvent>() {
+					@Override
+					public void handle(MouseEvent arg0) {
+						if (arg0.getButton().compareTo(MouseButton.MIDDLE) > 0) {
+							handleRightClick(row, col);
+						} else {
+							handleLeftClick(row, col);
+						}
+						
+					}
+					
+				});				
 			}
 		}
 	}
@@ -148,8 +160,8 @@ public class NonogramPresenter implements Openable {
 	 * This method changes any cell with a marked state to an empty state. 
 	 */
 	public void removeCellViewMarks() {
-		for (int row = 0; row < model.getNumRows(); row++) {
-			for (int col = 0; col < model.getNumCols(); col++) {
+		for (int rows = 0; rows < model.getNumRows(); rows++) {
+			for (int cols = 0; cols < model.getNumCols(); cols++) {
 				if(model.getCellState(row, col) == CellState.MARKED) {
 					view.setCellState(row, col, CellState.EMPTY);
 				}
