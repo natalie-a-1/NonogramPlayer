@@ -108,7 +108,7 @@ public class NonogramView extends BorderPane {
 	 * @param solved the state to be set to
 	 */
 	public void setRowClueState(int rowIdx, boolean solved) {
-		// TODO SET ROW STATES
+		leftCluesView.setState(rowIdx, solved);
 	}
 
 	/**
@@ -118,7 +118,8 @@ public class NonogramView extends BorderPane {
 	 * @param solved the state to be set
 	 */
 	public void setColClueState(int colIdx, boolean solved) {
-		// TODO SET COL STATES
+		topCluesView.setState(colIdx, solved);
+		
 	}
 
 	/**
@@ -127,7 +128,9 @@ public class NonogramView extends BorderPane {
 	 * @param solved the state to be set to
 	 */
 	public void setPuzzleState(boolean solved) {
-		// TODO
+		if (solved) {
+			this.getStylesheets().add(SOLVED_STYLE_CLASS);
+		}
 	}
 
 	/**
