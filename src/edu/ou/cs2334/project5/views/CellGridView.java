@@ -27,7 +27,7 @@ public class CellGridView extends GridPane {
 	public CellGridView(int numRows, int numCols, int cellLength) {
 		cellViews = new CellView[numRows][numCols];
 		initCells(numRows, numCols, cellLength);
-		this.setAlignment(Pos.CENTER);
+//		this.setAlignment(Pos.CENTER);
 		this.getStylesheets().add(STYLE_CLASS);
 
 	}
@@ -70,7 +70,7 @@ public class CellGridView extends GridPane {
 	 * @param colIdx the column index to be searched
 	 * @param state  the state of the CellView to be changed to
 	 */
-	public void setCellView(int rowIdx, int colIdx, CellState state) {
+	public void setCellState(int rowIdx, int colIdx, CellState state) {
 		cellViews[rowIdx][colIdx].setState(state);
 	}
 }
