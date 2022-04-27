@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.List;
 import edu.ou.cs2334.project5.Presenters.NonogramPresenter;
 import javafx.application.Application;
@@ -5,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-	
+
 	private static final int IDX_CELL_SIZE = 0;
 	private static final int DEFAULT_CELL_SIZE = 30;
 
@@ -14,27 +15,28 @@ public class Main extends Application {
 	 * 
 	 * @param args Arguments to run the program
 	 */
+
 	public static void main(String[] args) {
 		launch(args);
-
 	}
-	
-	/**
-	 * This method uses all components in the program to display it.
-	 * 
-	 * @param primaryStage the stage to display the program
-	 */
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		List<String> parameters = getParameters().getUnnamed();
-		NonogramPresenter nonogramPresenter = new NonogramPresenter(IDX_CELL_SIZE);
-		Scene scene = new Scene(nonogramPresenter.getPane());
+
+	public void start(Stage primaryStage) throws IOException {
+		int cellSize = 0;
+		NonogramPresenter presenter;
+
+		if (getParameters().getUnnamed().size() == 0) {
+			cellSize = DEFAULT_CELL_SIZE;
+		} else {
+			cellSize = Integer.parseInt(getParameters().getUnnamed().get(IDX_CELL_SIZE));
+		}
+
+		presenter = new NonogramPresenter(cellSize);
+
+		Scene scene = new Scene(presenter.getPane());
+
 		primaryStage.setScene(scene);
 		scene.getStylesheets().add("style.css");
-		primaryStage.setTitle("My first java app!"); // CHANGE NAME
-		primaryStage.setResizable(false);
+		primaryStage.setTitle("Nonogram Maker");
 		primaryStage.show();
-
 	}
-
 }
