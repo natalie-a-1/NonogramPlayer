@@ -443,3 +443,4 @@ The remaining lines represent the rows and columns of the cell grid where 0s rep
 <a id="f2">[2.](#a2)</a> Not all nonograms have unique solutions.
 For instance, if a checkerboard pattern with an even number of rows or columns solves a puzzle, it will solve the same puzzle if the empty and filled cells are flipped.
 Our program will accept either solution.
+# collectdreams-natalie-a-1
