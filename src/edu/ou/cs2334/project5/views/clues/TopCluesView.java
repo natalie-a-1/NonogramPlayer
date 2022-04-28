@@ -25,9 +25,11 @@ public class TopCluesView extends AbstractGroupCluesView {
 	public TopCluesView(int[][] colClues, int cellLength, int height) {
 		super(Orientation.HORIZONTAL, STYLE_CLASS, colClues, cellLength, height);
 		setMaxWidth(colClues.length * cellLength);
-		
-		// TODO: Possibly add something here. Do not directly discuss your
-		// solution on Discord.
+	}
+
+	@Override
+	protected AbstractOrientedClueView makeClue(int[] clue, int cellLength, int numClueUnits) {
+		return new VerticalClueView(clue, cellLength, numClueUnits);
 	}
 
 }

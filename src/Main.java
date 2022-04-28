@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.util.List;
 import edu.ou.cs2334.project5.Presenters.NonogramPresenter;
 import javafx.application.Application;
 import javafx.scene.Scene;

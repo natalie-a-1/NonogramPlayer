@@ -320,7 +320,6 @@ public class NonogramModel {
 		for (int col = 0; col < getNumCols(); col++) {
 			booValues[col] = CellState.toBoolean(getCellState(rowIdx, col));
 		}
-		int[] intValues = new int[booValues.length];
 
 		List<Integer> temp = project(booValues);
 

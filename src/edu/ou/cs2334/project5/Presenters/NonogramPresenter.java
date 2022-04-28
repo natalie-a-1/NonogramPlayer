@@ -2,16 +2,19 @@ package edu.ou.cs2334.project5.Presenters;
 
 import java.io.File;
 import java.io.IOException;
+import edu.ou.cs2334.project5.handlers.OpenHandler;
 import edu.ou.cs2334.project5.interfaces.Openable;
 import edu.ou.cs2334.project5.models.CellState;
 import edu.ou.cs2334.project5.models.NonogramModel;
-import edu.ou.cs2334.project5.views.CellView;
 import edu.ou.cs2334.project5.views.NonogramView;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import javafx.stage.Window;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 /**
  * This class implements the interface Openable to create a NonogramPresenter. 
@@ -154,7 +157,8 @@ public class NonogramPresenter implements Openable {
 			view.setColClueState(col, model.isColSolved(col));
 		}
 		
-		// TODO Synchronize the puzzle state (puzzle state refers to if the puzzle is solved/not solved).
+		view.setPuzzleState(model.isSolved());
+		
 		if (model.isSolved()) {
 			processVictory();
 		}
@@ -163,6 +167,7 @@ public class NonogramPresenter implements Openable {
 	/**
 	 * This method  clears all marks and displays the victory alert from the NonogramView class.
 	 */
+	//should return??????
 	public void processVictory() {
 		removeCellViewMarks();
 		view.getVictoryAlert();
@@ -185,7 +190,23 @@ public class NonogramPresenter implements Openable {
 	 * This method sets the actions for the load and reset buttons. 
 	 */
 	public void configureButtons() {
-		//TODO
+		//make sure this is right
+		FileChooser filechooser = new FileChooser();
+		filechooser.setTitle("Load");
+		filechooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"));
+		filechooser.setInitialDirectory(new File("."));
+		
+		view.getLoadButton().setOnAction(new OpenHandler(getWindow(), filechooser, this));
+		
+		filechooser.setTitle("Save");
+		view.getResetButton().setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				resetPuzzle();
+			}
+		});
+		
+		
 		view.getLoadButton();
 	}
 	
@@ -203,7 +224,11 @@ public class NonogramPresenter implements Openable {
 	 * @return	the window from NonogramView
 	 */
 	public Window getWindow() {
-		return view.getScene().getWindow();
+		try {
+		return this.view.getScene().getWindow();
+		} catch (NullPointerException e) {
+			return null;
+		}
 	}
 	
 	/**
@@ -223,8 +248,7 @@ public class NonogramPresenter implements Openable {
 	 */
 	@Override
 	public void open(File file) throws IOException {
-		// TODO is this the right constructor to use??
-		model = new NonogramModel(DEFAULT_PUZZLE);
+		model = new NonogramModel(file);
 		this.initializePresenter();
 	}
 	

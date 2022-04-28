@@ -47,7 +47,9 @@ public abstract class AbstractGroupCluesView extends FlowPane {
 		setMaxHeight(USE_PREF_SIZE);
 		
 		// TODO: Possibly add something here. Do not directly discuss your
-		// solution on Discord.
+		// prevent flowpane from wrapping??
+		setPrefWrapLength(Double.MAX_VALUE);
+		
 	}
 	
 	protected abstract AbstractOrientedClueView makeClue(int[] clue, int cellLength, int numClueUnits);

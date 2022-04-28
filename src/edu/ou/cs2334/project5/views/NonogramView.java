@@ -26,7 +26,7 @@ public class NonogramView extends BorderPane {
 	 * the layout of NonogramView.
 	 */
 	public NonogramView() {
-		this.getStylesheets().add(STYLE_CLASS);
+		this.getStyleClass().add(STYLE_CLASS);
 	}
 
 	/**
@@ -37,7 +37,7 @@ public class NonogramView extends BorderPane {
 	 * @return the length of the longest array
 	 */
 	public int getLength(int[][] numClues) {
-		int[] temp = null;
+		int[] temp = {};
 		for (int i = 0; i < numClues.length; i++) {
 			if (numClues[i].length > temp.length) {
 				temp = numClues[i];
@@ -129,7 +129,7 @@ public class NonogramView extends BorderPane {
 	 */
 	public void setPuzzleState(boolean solved) {
 		if (solved) {
-			this.getStylesheets().add(SOLVED_STYLE_CLASS);
+			this.getStyleClass().add(SOLVED_STYLE_CLASS);
 		}
 	}
 

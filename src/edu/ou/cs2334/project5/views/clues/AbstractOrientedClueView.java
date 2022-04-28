@@ -67,7 +67,10 @@ public abstract class AbstractOrientedClueView extends FlowPane {
 		// Try searching to see if flowpanel has a default wrap length and see
 		// if you can set it to a very large, maximum value
 		// FIX IT
-		setPrefWrapLength(Double.MAX_VALUE);
+		
+		
+		//IS THIS RIGHT?????
+		setPrefWrapLength(this.getPrefWrapLength());
 	}
 
 	/**
