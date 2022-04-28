@@ -11,7 +11,7 @@ import javafx.scene.layout.GridPane;
  */
 public class CellGridView extends GridPane {
 
-	private final static String STYLE_CLASS = "nonogram-view";
+	private final static String STYLE_CLASS = "cell-grid-view";
 	private CellView[][] cellViews;
 
 	/*
@@ -27,7 +27,7 @@ public class CellGridView extends GridPane {
 		cellViews = new CellView[numRows][numCols];
 		initCells(numRows, numCols, cellLength);
 //		this.setAlignment(Pos.CENTER);
-		this.getStylesheets().add(STYLE_CLASS);
+		this.getStyleClass().add(STYLE_CLASS);
 
 	}
 
