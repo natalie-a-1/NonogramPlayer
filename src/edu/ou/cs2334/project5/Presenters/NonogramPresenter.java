@@ -26,8 +26,6 @@ public class NonogramPresenter implements Openable {
 	private NonogramModel model;
 	private int cellLength;
 	private static String DEFAULT_PUZZLE = "puzzles/space-invader.txt";
-	public int row;
-	public int col;
 	
 	/**
 	 * This is the constructor for a NonogramPresenter.
@@ -45,7 +43,7 @@ public class NonogramPresenter implements Openable {
 	
 	private void initializePresenter() {
 		initializeView();
-		bindCellView();
+		bindCellViews();
 		synchronize();
 		configureButtons();
 	}
@@ -63,18 +61,20 @@ public class NonogramPresenter implements Openable {
 	/**
 	 * This method binds each cell in CellView to a button that handles mouse click events.
 	 */
-	public void bindCellView() {
-//		int row;
-//		int col;
+	public void bindCellViews() {
+		int row;
+		int col;
 		for (row = 0; row < model.getNumRows(); row++) {
 			for (col = 0; col < model.getNumCols(); col++) {
+				final int Frow = row;
+				final int Fcol = col;
 				view.getCellView(row, col).setOnMouseClicked(new EventHandler<MouseEvent>() {
 					@Override
 					public void handle(MouseEvent arg0) {
 						if (arg0.getButton().compareTo(MouseButton.MIDDLE) > 0) {
-							handleRightClick(row, col);
+							handleRightClick(Frow, Fcol);
 						} else {
-							handleLeftClick(row, col);
+							handleLeftClick(Frow, Fcol);
 						}
 						
 					}
@@ -125,10 +125,10 @@ public class NonogramPresenter implements Openable {
 		} else {
 			model.setCellState(rowIdx, colIdx, state);
 			view.setCellState(rowIdx, colIdx, state);
-			//TODO FIX BELOW???
-			view.setRowClueState(rowIdx, false);
-			view.setColClueState(colIdx, false);
+			view.setRowClueState(rowIdx, CellState.toBoolean(state));
+			view.setColClueState(colIdx, CellState.toBoolean(state));
 			
+			//THIS COULD NEED TO BE MOVED OUT OF IF STATAMENT!
 			if (model.isSolved()) {
 				processVictory();
 			}
@@ -139,9 +139,21 @@ public class NonogramPresenter implements Openable {
 	 * This method synchronizes the view and model together. 
 	 */
 	public void synchronize() {
-		//TODO WHAT SHOULD BE IN FIRST PARAMETERS
-		view.setCellState(model.getCellState(cellLength));
-		// TODO Synchronize the clue views with the row and column states. (Hint: use view.setRowClueState and view.setColClueState)
+		for (int row = 0; row < model.getNumRows(); row++) {
+			for (int col = 0; col < model.getNumCols(); col++) {
+				view.setCellState(row, col, model.getCellState(row, col));
+			}
+		}
+		
+		//Synchronize the clue views with the row and column states. (Hint: use view.setRowClueState and view.setColClueState)
+		for (int row = 0; row < model.getNumRows(); row++) {
+			view.setRowClueState(row, model.isRowSolved(row));
+		}
+		
+		for (int col = 0; col < model.getNumCols(); col++) {
+			view.setColClueState(col, model.isColSolved(col));
+		}
+		
 		// TODO Synchronize the puzzle state (puzzle state refers to if the puzzle is solved/not solved).
 		if (model.isSolved()) {
 			processVictory();
@@ -162,8 +174,8 @@ public class NonogramPresenter implements Openable {
 	public void removeCellViewMarks() {
 		for (int rows = 0; rows < model.getNumRows(); rows++) {
 			for (int cols = 0; cols < model.getNumCols(); cols++) {
-				if(model.getCellState(row, col) == CellState.MARKED) {
-					view.setCellState(row, col, CellState.EMPTY);
+				if(model.getCellState(rows, cols) == CellState.MARKED) {
+					view.setCellState(rows, cols, CellState.EMPTY);
 				}
 			}
 		}
@@ -174,6 +186,7 @@ public class NonogramPresenter implements Openable {
 	 */
 	public void configureButtons() {
 		//TODO
+		view.getLoadButton();
 	}
 	
 	/**
