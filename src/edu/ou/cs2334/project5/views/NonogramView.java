@@ -26,6 +26,7 @@ public class NonogramView extends BorderPane {
 	 * the layout of NonogramView.
 	 */
 	public NonogramView() {
+		//may need to be changed
 		this.getStyleClass().add(STYLE_CLASS);
 	}
 
@@ -37,13 +38,13 @@ public class NonogramView extends BorderPane {
 	 * @return the length of the longest array
 	 */
 	public int getLength(int[][] numClues) {
-		int[] temp = {};
+		int temp = -1;
 		for (int i = 0; i < numClues.length; i++) {
-			if (numClues[i].length > temp.length) {
-				temp = numClues[i];
+			if (numClues[i].length > temp) {
+				temp = numClues[i].length;
 			}
 		}
-		return temp.length;
+		return temp;
 	}
 
 	/**
@@ -57,6 +58,7 @@ public class NonogramView extends BorderPane {
 		leftCluesView = new LeftCluesView(rowClues, cellLength, getLength(rowClues));
 		topCluesView = new TopCluesView(colClues, cellLength, getLength(colClues));
 		cellGridView = new CellGridView(rowClues.length, colClues.length, cellLength);
+		
 
 		this.setLeft(leftCluesView);
 		this.setTop(topCluesView);
@@ -72,8 +74,8 @@ public class NonogramView extends BorderPane {
 	 */
 	public void initBottomHBox() {
 		bottomHBox = new HBox();
-		loadButton = new Button();
-		resetButton = new Button();
+		loadButton = new Button("Load");
+		resetButton = new Button("Reset");
 		bottomHBox.getChildren().addAll(loadButton, resetButton);
 		bottomHBox.setAlignment(Pos.CENTER);
 

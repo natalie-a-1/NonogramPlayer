@@ -37,11 +37,11 @@ public class NonogramPresenter implements Openable {
 	 * @throws IOException	thrown if the constructor is unable to open the file
 	 */
 	public NonogramPresenter(int cellLength) throws IOException {
-		NonogramModel modelTemp = new NonogramModel(DEFAULT_PUZZLE);
-		model = modelTemp;
-		NonogramView viewTemp = new NonogramView();
-		view = viewTemp;
+		this.cellLength = cellLength;
+		model = new NonogramModel(DEFAULT_PUZZLE);
+		view =  new NonogramView();
 		initializePresenter();
+		//may need to get rid of below code
 	}
 	
 	private void initializePresenter() {
@@ -65,18 +65,16 @@ public class NonogramPresenter implements Openable {
 	 * This method binds each cell in CellView to a button that handles mouse click events.
 	 */
 	public void bindCellViews() {
-		int row;
-		int col;
-		for (row = 0; row < model.getNumRows(); row++) {
-			for (col = 0; col < model.getNumCols(); col++) {
+		for (int row = 0; row < model.getNumRows(); row++) {
+			for (int col = 0; col < model.getNumCols(); col++) {
 				final int Frow = row;
 				final int Fcol = col;
 				view.getCellView(row, col).setOnMouseClicked(new EventHandler<MouseEvent>() {
 					@Override
 					public void handle(MouseEvent arg0) {
-						if (arg0.getButton().compareTo(MouseButton.MIDDLE) > 0) {
+						if (arg0.getButton().compareTo(MouseButton.SECONDARY) == 0) {
 							handleRightClick(Frow, Fcol);
-						} else {
+						} else if (arg0.getButton().compareTo(MouseButton.PRIMARY) == 0){
 							handleLeftClick(Frow, Fcol);
 						}
 						
@@ -205,9 +203,6 @@ public class NonogramPresenter implements Openable {
 				resetPuzzle();
 			}
 		});
-		
-		
-		view.getLoadButton();
 	}
 	
 	/**
@@ -225,7 +220,7 @@ public class NonogramPresenter implements Openable {
 	 */
 	public Window getWindow() {
 		try {
-		return this.view.getScene().getWindow();
+		return getPane().getScene().getWindow();
 		} catch (NullPointerException e) {
 			return null;
 		}

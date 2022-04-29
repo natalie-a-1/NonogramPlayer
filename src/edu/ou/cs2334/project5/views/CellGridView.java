@@ -41,11 +41,12 @@ public class CellGridView extends GridPane {
 	public void initCells(int numRows, int numCols, int cellLength) {
 		this.getChildren().clear();
 
+//		cellViews = new CellView[numRows][numCols];
 		for (int row = 0; row < numRows; row++) {
 			for (int col = 0; col < numCols; col++) {
 				CellView tempView = new CellView(cellLength);
 				cellViews[row][col] = tempView;
-				this.add(cellViews[row][col], row, col);
+				this.add(tempView, col, row);
 			}
 		}
 
