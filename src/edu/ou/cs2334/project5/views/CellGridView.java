@@ -26,7 +26,6 @@ public class CellGridView extends GridPane {
 	public CellGridView(int numRows, int numCols, int cellLength) {
 		cellViews = new CellView[numRows][numCols];
 		initCells(numRows, numCols, cellLength);
-//		this.setAlignment(Pos.CENTER);
 		this.getStyleClass().add(STYLE_CLASS);
 
 	}

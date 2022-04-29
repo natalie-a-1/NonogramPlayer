@@ -1,9 +1,16 @@
+package edu.ou.cs2334.project5;
 import java.io.IOException;
 import edu.ou.cs2334.project5.Presenters.NonogramPresenter;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * This class runs the whole program/
+ * 
+ * @author Natalie Hill
+ *
+ */
 public class Main extends Application {
 
 	private static final int IDX_CELL_SIZE = 0;
@@ -15,10 +22,18 @@ public class Main extends Application {
 	 * @param args Arguments to run the program
 	 */
 
+	/**
+	 * This is the main method which takes in all arguments and runs the program. 
+	 * 
+	 * @param args the arguments of the whole program
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}
 
+	/**
+	 * This method is an extension of Application that runs the program.
+	 */
 	public void start(Stage primaryStage) throws IOException {
 		int cellSize = 0;
 		NonogramPresenter presenter;

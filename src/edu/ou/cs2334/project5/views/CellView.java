@@ -5,6 +5,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * This class is the StackPane for the Nonogram and represents a singular cell. 
+ * 
+ * @author Natalie Hill
+ *
+ */
 public class CellView extends StackPane {
 
 	private static final String STYLE_CLASS = "cell-view";
@@ -17,6 +23,11 @@ public class CellView extends StackPane {
 	private Line xLeftLeg = new Line();
 	private Line xRightLeg = new Line();
 
+	/**
+	 * This is the constructor for a single cell.
+	 * 
+	 * @param sideLength	the length of a cell
+	 */
 	public CellView(int sideLength) {
 		getStyleClass().add(STYLE_CLASS);
 		setState(CellState.EMPTY);
@@ -24,6 +35,11 @@ public class CellView extends StackPane {
 		getChildren().addAll(background, xLeftLeg, xRightLeg);
 	}
 
+	/**
+	 * This method changes the state of a cell.
+	 * 
+	 * @param state	the CellState to be changed to
+	 */
 	public void setState(CellState state) {
 		ObservableList<String> styleClasses = getStyleClass();
 		styleClasses.removeAll(
@@ -43,6 +59,11 @@ public class CellView extends StackPane {
 		}
 	}
 
+	/**
+	 * This method changes the size of a cell.
+	 * 
+	 * @param sideLength	the width and height the cell should be set to 
+	 */
 	public void setSize(int sideLength) {
 		background.setWidth(sideLength);
 		background.setHeight(sideLength);
