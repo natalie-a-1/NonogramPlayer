@@ -8,6 +8,12 @@ import javafx.event.EventHandler;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
+/**
+ * This class handles events for Openable.
+ * 
+ * @author Natalie Hill
+ *
+ */
 public class OpenHandler extends AbstractBaseHandler implements EventHandler<ActionEvent> {
 
 	private Openable opener;

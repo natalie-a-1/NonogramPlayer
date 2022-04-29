@@ -126,8 +126,8 @@ public class NonogramPresenter implements Openable {
 		} else {
 			model.setCellState(rowIdx, colIdx, state);
 			view.setCellState(rowIdx, colIdx, state);
-			view.setRowClueState(rowIdx, CellState.toBoolean(state));
-			view.setColClueState(colIdx, CellState.toBoolean(state));
+			view.setRowClueState(rowIdx, model.isRowSolved(rowIdx));
+			view.setColClueState(colIdx, model.isColSolved(colIdx));
 			
 			//THIS COULD NEED TO BE MOVED OUT OF IF STATAMENT!
 			if (model.isSolved()) {

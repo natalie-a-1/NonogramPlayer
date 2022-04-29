@@ -14,13 +14,11 @@ public class CellGridView extends GridPane {
 	private final static String STYLE_CLASS = "cell-grid-view";
 	private CellView[][] cellViews;
 
-	/*
+	/**
 	 * This method creates a CellGridView object.
 	 * 
 	 * @param numRows the number of rows in the CellGrid
-	 * 
 	 * @param numCols the number of columns in the CellGrid
-	 * 
 	 * @param cellLength the length of each cell
 	 */
 	public CellGridView(int numRows, int numCols, int cellLength) {

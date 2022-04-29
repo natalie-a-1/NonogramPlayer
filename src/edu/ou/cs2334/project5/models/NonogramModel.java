@@ -284,6 +284,7 @@ public class NonogramModel {
 	/**
 	 * This method projects a list of cellStates.
 	 * 
+	 * @param cells	boolean array 
 	 * @return a list of cellStates
 	 */
 	public static List<Integer> project(boolean[] cells) {

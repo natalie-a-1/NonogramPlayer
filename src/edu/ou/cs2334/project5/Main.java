@@ -17,12 +17,6 @@ public class Main extends Application {
 	private static final int DEFAULT_CELL_SIZE = 30;
 
 	/**
-	 * The main method the whole program.
-	 * 
-	 * @param args Arguments to run the program
-	 */
-
-	/**
 	 * This is the main method which takes in all arguments and runs the program. 
 	 * 
 	 * @param args the arguments of the whole program

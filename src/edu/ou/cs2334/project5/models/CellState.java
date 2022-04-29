@@ -7,13 +7,24 @@ package edu.ou.cs2334.project5.models;
  *
  */
 public enum CellState {
-	EMPTY, FILLED, MARKED;
+	/**
+	 * This represents an empty state.
+	 */
+	EMPTY, 
+	/**
+	 * This represents a filled state.
+	 */
+	FILLED, 
+	/**
+	 * This represents a marked state.
+	 */
+	MARKED;
 	
 	/**
 	 * This method takes in a state and changes it to a boolean value.
 	 * 
 	 * @param state	the state the CellView is in
-	 * @return
+	 * @return	the state as a boolean value
 	 */
 	public static boolean toBoolean(CellState state) {
 		boolean stateOf = false;

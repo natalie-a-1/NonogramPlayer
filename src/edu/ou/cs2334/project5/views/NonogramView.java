@@ -10,6 +10,12 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
+/**
+ * This class extends BorderPane and creates a display of the Nonogram.
+ * 
+ * @author nataliehill
+ *
+ */
 public class NonogramView extends BorderPane {
 
 	private static final String STYLE_CLASS = "nonogram-view";
@@ -163,6 +169,7 @@ public class NonogramView extends BorderPane {
 		alert.setTitle("Puzzle Solved");
 		alert.setHeaderText("Congratulations!");
 		alert.setContentText("You Win!");
+		alert.show();
 		return alert;
 	}
 }

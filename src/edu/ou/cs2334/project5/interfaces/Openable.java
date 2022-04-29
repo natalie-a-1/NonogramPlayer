@@ -3,6 +3,12 @@ package edu.ou.cs2334.project5.interfaces;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * This is the interface used to open files.
+ * 
+ * @author Natalie Hill
+ *
+ */
 public interface Openable {
 	
 	/**
