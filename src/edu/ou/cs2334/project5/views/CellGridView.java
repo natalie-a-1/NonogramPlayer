@@ -25,7 +25,6 @@ public class CellGridView extends GridPane {
 		cellViews = new CellView[numRows][numCols];
 		initCells(numRows, numCols, cellLength);
 		this.getStyleClass().add(STYLE_CLASS);
-
 	}
 
 	/**
@@ -36,9 +35,6 @@ public class CellGridView extends GridPane {
 	 * @param cellLength the length of each cell
 	 */
 	public void initCells(int numRows, int numCols, int cellLength) {
-		this.getChildren().clear();
-
-//		cellViews = new CellView[numRows][numCols];
 		for (int row = 0; row < numRows; row++) {
 			for (int col = 0; col < numCols; col++) {
 				CellView tempView = new CellView(cellLength);
@@ -46,7 +42,6 @@ public class CellGridView extends GridPane {
 				this.add(tempView, col, row);
 			}
 		}
-
 	}
 
 	/**

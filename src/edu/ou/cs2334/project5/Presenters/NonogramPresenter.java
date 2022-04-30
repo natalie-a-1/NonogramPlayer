@@ -9,6 +9,7 @@ import edu.ou.cs2334.project5.models.NonogramModel;
 import edu.ou.cs2334.project5.views.NonogramView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -41,7 +42,6 @@ public class NonogramPresenter implements Openable {
 		model = new NonogramModel(DEFAULT_PUZZLE);
 		view =  new NonogramView();
 		initializePresenter();
-		//may need to get rid of below code
 	}
 	
 	private void initializePresenter() {
@@ -128,8 +128,6 @@ public class NonogramPresenter implements Openable {
 			view.setCellState(rowIdx, colIdx, state);
 			view.setRowClueState(rowIdx, model.isRowSolved(rowIdx));
 			view.setColClueState(colIdx, model.isColSolved(colIdx));
-			
-			//THIS COULD NEED TO BE MOVED OUT OF IF STATAMENT!
 			if (model.isSolved()) {
 				processVictory();
 			}
@@ -145,16 +143,12 @@ public class NonogramPresenter implements Openable {
 				view.setCellState(row, col, model.getCellState(row, col));
 			}
 		}
-		
-		//Synchronize the clue views with the row and column states. (Hint: use view.setRowClueState and view.setColClueState)
 		for (int row = 0; row < model.getNumRows(); row++) {
 			view.setRowClueState(row, model.isRowSolved(row));
 		}
-		
 		for (int col = 0; col < model.getNumCols(); col++) {
 			view.setColClueState(col, model.isColSolved(col));
 		}
-		
 		view.setPuzzleState(model.isSolved());
 		
 		if (model.isSolved()) {
@@ -165,7 +159,6 @@ public class NonogramPresenter implements Openable {
 	/**
 	 * This method  clears all marks and displays the victory alert from the NonogramView class.
 	 */
-	//should return??????
 	public void processVictory() {
 		removeCellViewMarks();
 		view.getVictoryAlert();

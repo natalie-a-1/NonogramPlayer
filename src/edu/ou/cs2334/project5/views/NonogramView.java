@@ -13,7 +13,7 @@ import javafx.scene.layout.HBox;
 /**
  * This class extends BorderPane and creates a display of the Nonogram.
  * 
- * @author nataliehill
+ * @author Natalie Hill
  *
  */
 public class NonogramView extends BorderPane {
@@ -32,7 +32,6 @@ public class NonogramView extends BorderPane {
 	 * the layout of NonogramView.
 	 */
 	public NonogramView() {
-		//may need to be changed
 		this.getStyleClass().add(STYLE_CLASS);
 	}
 
@@ -65,6 +64,7 @@ public class NonogramView extends BorderPane {
 		topCluesView = new TopCluesView(colClues, cellLength, getLength(colClues));
 		cellGridView = new CellGridView(rowClues.length, colClues.length, cellLength);
 		
+		cellGridView.setAlignment(Pos.CENTER);
 
 		this.setLeft(leftCluesView);
 		this.setTop(topCluesView);
