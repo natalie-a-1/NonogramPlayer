@@ -120,13 +120,13 @@ public class NonogramPresenter implements Openable {
 	 * @param state		the state the cell should be changed to 
 	 */
 	public void updateCellState(int rowIdx, int colIdx, CellState state) {
-		if (model.getCellState(rowIdx, colIdx) == state) {
-			model.setCellState(rowIdx, colIdx, state);
-		} else {
+		if (model.setCellState(rowIdx, colIdx, state)) {
 			model.setCellState(rowIdx, colIdx, state);
 			view.setCellState(rowIdx, colIdx, state);
 			view.setRowClueState(rowIdx, model.isRowSolved(rowIdx));
 			view.setColClueState(colIdx, model.isColSolved(colIdx));
+			
+			view.setPuzzleState(model.isSolved());
 			if (model.isSolved()) {
 				processVictory();
 			}
@@ -149,6 +149,7 @@ public class NonogramPresenter implements Openable {
 			view.setColClueState(col, model.isColSolved(col));
 		}
 		view.setPuzzleState(model.isSolved());
+//		view.setPuzzleState(true);
 		
 		if (model.isSolved()) {
 			processVictory();
@@ -181,9 +182,6 @@ public class NonogramPresenter implements Openable {
 	 */
 	public void configureButtons() {
 		FileChooser filechooser = new FileChooser();
-//		filechooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"));
-//		filechooser.setInitialDirectory(new File("."));
-		
 		view.getLoadButton().setOnAction(new OpenHandler(getWindow(), filechooser, this));
 				view.getResetButton().setOnAction(new EventHandler<ActionEvent>() {
 			@Override

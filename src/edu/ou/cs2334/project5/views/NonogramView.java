@@ -142,6 +142,8 @@ public class NonogramView extends BorderPane {
 	public void setPuzzleState(boolean solved) {
 		if (solved) {
 			this.getStyleClass().add(SOLVED_STYLE_CLASS);
+		} else {
+			getStyleClass().removeAll(SOLVED_STYLE_CLASS);
 		}
 	}
 
