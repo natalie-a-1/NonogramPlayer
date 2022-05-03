@@ -5,7 +5,7 @@ import javafx.geometry.Orientation;
 /**
  * Represents a view containing all column clues displayed above the grid.
  * 
- * @author It's you
+ * @author Natalie Hill
  * @version 0.1
  */
 public class TopCluesView extends AbstractGroupCluesView {

@@ -1,6 +1,7 @@
 package edu.ou.cs2334.project5.Presenters;
 
 import java.io.File;
+
 import java.io.IOException;
 import edu.ou.cs2334.project5.handlers.OpenHandler;
 import edu.ou.cs2334.project5.interfaces.Openable;
@@ -9,13 +10,11 @@ import edu.ou.cs2334.project5.models.NonogramModel;
 import edu.ou.cs2334.project5.views.NonogramView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
-import javafx.stage.FileChooser.ExtensionFilter;
 
 /**
  * This class implements the interface Openable to create a NonogramPresenter. 
@@ -181,16 +180,12 @@ public class NonogramPresenter implements Openable {
 	 * This method sets the actions for the load and reset buttons. 
 	 */
 	public void configureButtons() {
-		//make sure this is right
 		FileChooser filechooser = new FileChooser();
-		filechooser.setTitle("Load");
-		filechooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"));
-		filechooser.setInitialDirectory(new File("."));
+//		filechooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"));
+//		filechooser.setInitialDirectory(new File("."));
 		
 		view.getLoadButton().setOnAction(new OpenHandler(getWindow(), filechooser, this));
-		
-		filechooser.setTitle("Save");
-		view.getResetButton().setOnAction(new EventHandler<ActionEvent>() {
+				view.getResetButton().setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
 				resetPuzzle();

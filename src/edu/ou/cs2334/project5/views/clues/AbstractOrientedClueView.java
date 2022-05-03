@@ -12,7 +12,7 @@ import javafx.scene.layout.FlowPane;
  * List and displayed using a FlowPane the layout of the FlowPane is specified
  * by child classes.
  * 
- * @author It's you
+ * @author Natalie Hill
  * @version 0.1
  */
 public abstract class AbstractOrientedClueView extends FlowPane {
@@ -70,7 +70,7 @@ public abstract class AbstractOrientedClueView extends FlowPane {
 		
 		
 		//IS THIS RIGHT?????
-		setPrefWrapLength(this.getPrefWrapLength());
+		setPrefWrapLength(Double.MAX_VALUE);
 	}
 
 	/**
