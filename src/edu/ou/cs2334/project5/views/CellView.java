@@ -1,4 +1,5 @@
 package edu.ou.cs2334.project5.views;
+
 import edu.ou.cs2334.project5.models.CellState;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.StackPane;
@@ -6,7 +7,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
 /**
- * This class is the StackPane for the Nonogram and represents a singular cell. 
+ * This class is the StackPane for the Nonogram and represents a singular cell.
  * 
  * @author Natalie Hill
  *
@@ -26,7 +27,7 @@ public class CellView extends StackPane {
 	/**
 	 * This is the constructor for a single cell.
 	 * 
-	 * @param sideLength	the length of a cell
+	 * @param sideLength the length of a cell
 	 */
 	public CellView(int sideLength) {
 		getStyleClass().add(STYLE_CLASS);
@@ -38,31 +39,30 @@ public class CellView extends StackPane {
 	/**
 	 * This method changes the state of a cell.
 	 * 
-	 * @param state	the CellState to be changed to
+	 * @param state the CellState to be changed to
 	 */
 	public void setState(CellState state) {
 		ObservableList<String> styleClasses = getStyleClass();
-		styleClasses.removeAll(
-				EMPTY_STYLE_CLASS, FILLED_STYLE_CLASS, MARKED_STYLE_CLASS);
+		styleClasses.removeAll(EMPTY_STYLE_CLASS, FILLED_STYLE_CLASS, MARKED_STYLE_CLASS);
 		switch (state) {
-			case EMPTY:
-				styleClasses.add(EMPTY_STYLE_CLASS);
-				break;
-			case FILLED:
-				styleClasses.add(FILLED_STYLE_CLASS);
-				break;
-			case MARKED:
-				styleClasses.add(MARKED_STYLE_CLASS);
-				break;
-			default:
-				throw new IllegalArgumentException();
+		case EMPTY:
+			styleClasses.add(EMPTY_STYLE_CLASS);
+			break;
+		case FILLED:
+			styleClasses.add(FILLED_STYLE_CLASS);
+			break;
+		case MARKED:
+			styleClasses.add(MARKED_STYLE_CLASS);
+			break;
+		default:
+			throw new IllegalArgumentException();
 		}
 	}
 
 	/**
 	 * This method changes the size of a cell.
 	 * 
-	 * @param sideLength	the width and height the cell should be set to 
+	 * @param sideLength the width and height the cell should be set to
 	 */
 	public void setSize(int sideLength) {
 		background.setWidth(sideLength);

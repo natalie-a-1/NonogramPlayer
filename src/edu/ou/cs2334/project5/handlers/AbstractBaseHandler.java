@@ -9,14 +9,14 @@ import javafx.stage.Window;
  * @author Natalie Hill
  *
  */
-	public abstract class AbstractBaseHandler {
+public abstract class AbstractBaseHandler {
 
-		protected Window window;
-		protected FileChooser fileChooser;
+	protected Window window;
+	protected FileChooser fileChooser;
 
-		protected AbstractBaseHandler(Window window, FileChooser fileChooser) {
-			this.window = window;
-			this.fileChooser = fileChooser;
-		}
-
+	protected AbstractBaseHandler(Window window, FileChooser fileChooser) {
+		this.window = window;
+		this.fileChooser = fileChooser;
 	}
+
+}

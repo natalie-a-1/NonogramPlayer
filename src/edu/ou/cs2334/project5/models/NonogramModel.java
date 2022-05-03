@@ -33,9 +33,7 @@ public class NonogramModel {
 	 */
 	public NonogramModel(int[][] rowClues, int[][] colClues) {
 		this.rowClues = deepCopy(rowClues);
-		// deepCopy(rowClues);
 		this.colClues = deepCopy(colClues);
-		// deepCopy(colClues);
 		cellStates = initCellStates(getNumRows(), getNumCols());
 	}
 
@@ -62,7 +60,6 @@ public class NonogramModel {
 
 		cellStates = initCellStates(getNumRows(), getNumCols());
 
-		// Close reader
 		reader.close();
 	}
 
@@ -77,19 +74,15 @@ public class NonogramModel {
 		this(new File(filename));
 	}
 
-	// This is implemented for you
 	private static CellState[][] initCellStates(int numRows, int numCols) {
-		// Create a 2D array to store numRows * numCols elements
 		CellState[][] cellStates = new CellState[numRows][numCols];
 
-		// Set each element of the array to empty
 		for (int rowIdx = 0; rowIdx < numRows; ++rowIdx) {
 			for (int colIdx = 0; colIdx < numCols; ++colIdx) {
 				cellStates[rowIdx][colIdx] = CellState.EMPTY;
 			}
 		}
 
-		// Return the result
 		return cellStates;
 	}
 
@@ -102,26 +95,22 @@ public class NonogramModel {
 		return temp;
 	}
 
-	// This method is implemented for you. You need to figure out how it is useful.
+	//Implemented for you 
 	private static int[][] readClueLines(BufferedReader reader, int numLines) throws IOException {
-		// Create a new 2D array to store the clues
+
 		int[][] clueLines = new int[numLines][];
 
-		// Read in clues line-by-line and add them to the array
 		for (int lineNum = 0; lineNum < numLines; ++lineNum) {
-			// Read in a line
+
 			String line = reader.readLine();
 
-			// Split the line according to the delimiter character
 			String[] tokens = line.split(DELIMITER);
 
-			// Create new int array to store the clues in
 			int[] clues = new int[tokens.length];
 			for (int idx = 0; idx < tokens.length; ++idx) {
 				clues[idx] = Integer.parseInt(tokens[idx]);
 			}
 
-			// Store the processed clues in the resulting 2D array
 			clueLines[lineNum] = clues;
 		}
 
@@ -284,7 +273,7 @@ public class NonogramModel {
 	/**
 	 * This method projects a list of cellStates.
 	 * 
-	 * @param cells	boolean array 
+	 * @param cells boolean array
 	 * @return a list of cellStates
 	 */
 	public static List<Integer> project(boolean[] cells) {

@@ -14,13 +14,13 @@ public class LeftCluesView extends AbstractGroupCluesView {
 	 * The style class for this view.
 	 */
 	private static final String STYLE_CLASS = "left-clues-view";
-	
+
 	/**
 	 * Constructs a LeftCluesView given a set of clues, cell length, and width.
 	 * 
-	 * @param rowClues a set of horizontal row clues
+	 * @param rowClues   a set of horizontal row clues
 	 * @param cellLength the length of a cell
-	 * @param width the maximum number of numbered clues among all rows
+	 * @param width      the maximum number of numbered clues among all rows
 	 */
 	public LeftCluesView(int[][] rowClues, int cellLength, int width) {
 		super(Orientation.VERTICAL, STYLE_CLASS, rowClues, cellLength, width);

@@ -1,4 +1,5 @@
 package edu.ou.cs2334.project5.views.clues;
+
 import javafx.collections.ObservableList;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
@@ -17,17 +18,17 @@ public class ClueItemView extends StackPane {
 	 * The base style class.
 	 */
 	private static final String STYLE_CLASS = "clue-item-view";
-	
+
 	/**
 	 * The style class used to for an unsolved clue.
 	 */
 	private static final String UNSOLVED_STYLE_CLASS = "clue-item-view-unsolved";
-	
+
 	/**
 	 * The style class for a solved clue.
 	 */
 	private static final String SOLVED_STYLE_CLASS = "clue-item-view-solved";
-	
+
 	/**
 	 * The scaling factor of the font size relative to the cell length.
 	 */
@@ -37,7 +38,7 @@ public class ClueItemView extends StackPane {
 	 * A Rectangle used to color the clue background.
 	 */
 	private Rectangle background = new Rectangle();
-	
+
 	/**
 	 * A Text entry used to display the clue.
 	 */
@@ -46,7 +47,7 @@ public class ClueItemView extends StackPane {
 	/**
 	 * Constructs a ClueItemView with no clue and a side length.
 	 * 
-	 * @param sideLength the side length (width/height) 
+	 * @param sideLength the side length (width/height)
 	 */
 	public ClueItemView(int sideLength) {
 		this("", sideLength);
@@ -55,8 +56,8 @@ public class ClueItemView extends StackPane {
 	/**
 	 * Constructs a ClueItemView with a clue and a side length.
 	 * 
-	 * @param clue the clue integer value
-	 * @param sideLength the side length (width/height) 
+	 * @param clue       the clue integer value
+	 * @param sideLength the side length (width/height)
 	 */
 	public ClueItemView(int clue, int sideLength) {
 		this(Integer.toString(clue), sideLength);
@@ -65,7 +66,7 @@ public class ClueItemView extends StackPane {
 	/**
 	 * Constructs a ClueItemView given a clue and side length.
 	 * 
-	 * @param clue the String representation of a clue
+	 * @param clue       the String representation of a clue
 	 * @param sideLength the side length (width/height)
 	 */
 	private ClueItemView(String clue, int sideLength) {
@@ -79,8 +80,8 @@ public class ClueItemView extends StackPane {
 	/**
 	 * Updates the state of the ClueItemView by updating style classes.
 	 * 
-	 * When unsolved, this the clue uses the unsolved styling. When solve, this
-	 * clue uses the solved styling.
+	 * When unsolved, this the clue uses the unsolved styling. When solve, this clue
+	 * uses the solved styling.
 	 * 
 	 * @param solved the solved status
 	 */

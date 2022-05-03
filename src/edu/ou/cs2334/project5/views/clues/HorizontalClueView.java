@@ -1,4 +1,5 @@
 package edu.ou.cs2334.project5.views.clues;
+
 import javafx.geometry.Orientation;
 
 /**
@@ -17,9 +18,9 @@ public class HorizontalClueView extends AbstractOrientedClueView {
 	/**
 	 * Constructs a HorizontalClueView using the given parameter values.
 	 * 
-	 * @param rowClue an array of row clues
+	 * @param rowClue    an array of row clues
 	 * @param cellLength the length of a cell
-	 * @param width the maximum number of numbered clues among all rows
+	 * @param width      the maximum number of numbered clues among all rows
 	 */
 	public HorizontalClueView(int[] rowClue, int cellLength, int width) {
 		super(Orientation.HORIZONTAL, STYLE_CLASS, rowClue, cellLength, width);

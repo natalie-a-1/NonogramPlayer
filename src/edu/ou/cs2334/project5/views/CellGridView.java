@@ -17,8 +17,8 @@ public class CellGridView extends GridPane {
 	/**
 	 * This method creates a CellGridView object.
 	 * 
-	 * @param numRows the number of rows in the CellGrid
-	 * @param numCols the number of columns in the CellGrid
+	 * @param numRows    the number of rows in the CellGrid
+	 * @param numCols    the number of columns in the CellGrid
 	 * @param cellLength the length of each cell
 	 */
 	public CellGridView(int numRows, int numCols, int cellLength) {

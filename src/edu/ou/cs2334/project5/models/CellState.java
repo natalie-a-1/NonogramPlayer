@@ -10,21 +10,21 @@ public enum CellState {
 	/**
 	 * This represents an empty state.
 	 */
-	EMPTY, 
+	EMPTY,
 	/**
 	 * This represents a filled state.
 	 */
-	FILLED, 
+	FILLED,
 	/**
 	 * This represents a marked state.
 	 */
 	MARKED;
-	
+
 	/**
 	 * This method takes in a state and changes it to a boolean value.
 	 * 
-	 * @param state	the state the CellView is in
-	 * @return	the state as a boolean value
+	 * @param state the state the CellView is in
+	 * @return the state as a boolean value
 	 */
 	public static boolean toBoolean(CellState state) {
 		boolean stateOf = false;

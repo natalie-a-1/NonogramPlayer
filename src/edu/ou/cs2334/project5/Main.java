@@ -1,4 +1,5 @@
 package edu.ou.cs2334.project5;
+
 import java.io.IOException;
 import edu.ou.cs2334.project5.Presenters.NonogramPresenter;
 import javafx.application.Application;
@@ -17,7 +18,7 @@ public class Main extends Application {
 	private static final int DEFAULT_CELL_SIZE = 30;
 
 	/**
-	 * This is the main method which takes in all arguments and runs the program. 
+	 * This is the main method which takes in all arguments and runs the program.
 	 * 
 	 * @param args the arguments of the whole program
 	 */
